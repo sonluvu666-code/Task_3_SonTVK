@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-custom sticky-top">
+    <div class="container d-flex justify-content-between">
+      <a class="navbar-brand" href="index.html">Management System</a>
+      <div class="dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Home</a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" href="index.html">Home</a></li>
+          <li><a class="dropdown-item" href="login.html">Login</a></li>
+          <li><a class="dropdown-item" href="home.html">Courses</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section id="heroCarousel" class="hero carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000" aria-label="Featured">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active" style="background-image:url('images/slide-simple.jpg')">
+        <div class="container slide-content d-flex flex-column justify-content-center">
+          <div class="eyebrow">Welcome to our platform</div>
+          <h1>Management Made Simple</h1>
+          <p>Simplify your work, stay organized, and achieve more with our easy-to-use management system.</p>
+          <div><a class="btn btn-main" href="login.html">Get Started →</a></div>
+        </div>
+      </div>
+      <div class="carousel-item " style="background-image:url('images/slide-team.jpg')">
+        <div class="container slide-content d-flex flex-column justify-content-center">
+          <div class="eyebrow">Work together</div>
+          <h1>Better Team Collaboration</h1>
+          <p>Keep your team connected, organize responsibilities, and manage tasks in one convenient place.</p>
+          <div><a class="btn btn-main" href="login.html">Join Us →</a></div>
+        </div>
+      </div>
+      <div class="carousel-item " style="background-image:url('images/slide-goals.jpg')">
+        <div class="container slide-content d-flex flex-column justify-content-center">
+          <div class="eyebrow">Work smarter</div>
+          <h1>Achieve Your Goals</h1>
+          <p>Track progress, manage information, and improve productivity with a clear and organized workflow.</p>
+          <div><a class="btn btn-main" href="login.html">Login Now →</a></div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>
+  </section>
+
+  <section class="goal">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5">
+          <img class="goal-img img-fluid w-100" src="images/goal-office.jpg" alt="Bright modern office with a long meeting table">
+        </div>
+        <div class="col-lg-7">
+          <span class="label">Our Goal</span>
+          <h2 class="mb-3">Goal of This Website</h2>
+          <p class="lead-text mb-4">Our goal is to provide a simple, secure, and efficient management system that helps users organize their work, manage information, track progress, and improve productivity — all in one place.</p>
+          <div class="row g-3">
+            <div class="col-sm-6"><div class="feature"><div class="icon">👥</div><h3>Easy to Use</h3><p>A simple and clear interface for every user.</p></div></div>
+            <div class="col-sm-6"><div class="feature"><div class="icon">🔒</div><h3>Secure</h3><p>Keep information protected with appropriate security.</p></div></div>
+            <div class="col-sm-6"><div class="feature"><div class="icon">⚡</div><h3>Efficient</h3><p>Save time by keeping tasks and information organized.</p></div></div>
+            <div class="col-sm-6"><div class="feature"><div class="icon">📈</div><h3>Better Productivity</h3><p>Track progress and work toward your goals.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta text-center">
+    <h2>Ready to Get Started?</h2>
+    <p class="mb-3">Create your account and start organizing your work today.</p>
+    <a class="btn btn-main" href="login.html">Create an Account</a>
+  </section>
+
+  <footer class="footer-custom text-center">
+    <div>Management System</div>
+    <div>© 2026 Management System. All rights reserved.</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
