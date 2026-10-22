@@ -2,6 +2,7 @@ package com.test.demo;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.options;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
@@ -16,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.mock.web.MockHttpSession;
 
 @WebMvcTest(UserController.class)
-@Import(ApiExceptionHandler.class)
+@Import({ApiExceptionHandler.class, WebConfiguration.class})
 class UserControllerTest {
 
     @Autowired
@@ -106,5 +107,18 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email").value("alex@example.com"))
                 .andExpect(request().sessionAttribute(AccountController.SESSION_USER_ID, 1L));
+    }
+
+    @Test
+    void loginEndpointAllowsCredentialedRequestsFromGitHubPages() throws Exception {
+        mockMvc.perform(options("/api/users/login")
+                        .header("Origin", "https://sonluvu666-code.github.io")
+                        .header("Access-Control-Request-Method", "POST")
+                        .header("Access-Control-Request-Headers", "content-type"))
+                .andExpect(status().isOk())
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers
+                        .header().string("Access-Control-Allow-Origin", "https://sonluvu666-code.github.io"))
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers
+                        .header().string("Access-Control-Allow-Credentials", "true"));
     }
 }

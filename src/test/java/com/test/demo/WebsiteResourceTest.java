@@ -62,6 +62,10 @@ class WebsiteResourceTest {
         mockMvc.perform(get("/js/account.js"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("/api/account/todos")));
+
+        mockMvc.perform(get("/js/config.js"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("apiBaseUrl")));
     }
 
     @Test
@@ -70,7 +74,7 @@ class WebsiteResourceTest {
         Path expectedRoot = Path.of(originalWorkingDirectory).toAbsolutePath().normalize();
         try {
             System.setProperty("user.dir", System.getProperty("java.io.tmpdir"));
-            assertThat(new WebConfiguration().findWebRoot()).isEqualTo(expectedRoot);
+            assertThat(new WebConfiguration("http://localhost:8081").findWebRoot()).isEqualTo(expectedRoot);
         } finally {
             System.setProperty("user.dir", originalWorkingDirectory);
         }

@@ -81,3 +81,22 @@ Settings and generate a public domain. Share that HTTPS URL with your teacher.
 Set `SESSION_COOKIE_SECURE=true` in the app service Variables after enabling
 the HTTPS domain. Keep database credentials in Railway Variables; never commit
 them to GitHub.
+
+### Keep the frontend on GitHub Pages
+
+To serve only the frontend from GitHub Pages and host the API on Railway:
+
+1. Deploy this application to Railway with a MySQL service as described above,
+   and generate a public HTTPS domain for the app service.
+2. Set `CORS_ALLOWED_ORIGINS=https://sonluvu666-code.github.io` in Railway.
+   Add any other exact frontend origins as comma-separated values.
+3. Set `SESSION_COOKIE_SECURE=true` and `SESSION_COOKIE_SAME_SITE=None` in
+   Railway so the browser can send the session cookie from GitHub Pages.
+4. In `js/config.js`, set `apiBaseUrl` to the Railway app's origin, for example
+   `https://your-app.up.railway.app` (no trailing slash), and push the change
+   to the branch GitHub Pages publishes.
+
+The frontend uses credentialed cross-origin API requests. Browser privacy
+settings that block third-party cookies can prevent GitHub Pages from retaining
+the Railway session; in that case, use the Railway-hosted app URL for the
+complete same-origin experience.

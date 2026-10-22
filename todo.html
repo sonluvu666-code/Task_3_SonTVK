@@ -23,7 +23,7 @@
   <main class="account-main">
     <div class="page-heading">
       <div><p class="account-eyebrow">Your time, your priorities</p><h1 class="page-title">ToDo list</h1><p class="account-muted"><span data-todo-progress>0 of 0 tasks completed</span></p></div>
-      <a class="button-secondary" href="/api/account/todos.xlsx">↓ &nbsp;Export Excel</a>
+      <a class="button-secondary" href="/api/account/todos.xlsx" data-api-path="/api/account/todos.xlsx">↓ &nbsp;Export Excel</a>
     </div>
     <section class="account-card task-card">
       <h2>Add a task</h2>
@@ -39,6 +39,7 @@
     </section>
   </main>
   <p class="account-status" data-status role="status" aria-live="polite"></p>
-  <script src="js/account.js?v=2"></script>
+  <script src="js/config.js?v=1"></script>
+  <script src="js/account.js?v=3"></script>
 </body>
 </html>

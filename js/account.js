@@ -2,6 +2,15 @@
   var status = document.querySelector("[data-status]");
   var page = document.body.dataset.page;
   var currentUser;
+  var apiBaseUrl = (window.APP_CONFIG && window.APP_CONFIG.apiBaseUrl || "").replace(/\/+$/, "");
+
+  function apiUrl(path) {
+    return apiBaseUrl + path;
+  }
+
+  document.querySelectorAll("[data-api-path]").forEach(function (link) {
+    link.href = apiUrl(link.dataset.apiPath);
+  });
 
   function showStatus(message, isError) {
     status.textContent = message;
@@ -12,7 +21,7 @@
   async function api(path, options) {
     var response;
     try {
-      response = await fetch(path, Object.assign({ credentials: "same-origin" }, options || {}));
+      response = await fetch(apiUrl(path), Object.assign({ credentials: "include" }, options || {}));
     } catch (error) {
       throw new Error("Could not connect to the server. Check that the application is running.");
     }
@@ -179,7 +188,7 @@
       image.hidden = true;
       document.querySelector("[data-avatar-initial]").hidden = false;
     });
-    image.src = "/api/users/profile-image?refresh=" + Date.now();
+    image.src = apiUrl("/api/users/profile-image?refresh=" + Date.now());
 
     document.getElementById("profileImageFile").addEventListener("change", function (event) {
       var file = event.target.files[0];
@@ -206,7 +215,7 @@
       data.append("image", file);
       try {
         await api("/api/users/profile-image", { method: "POST", body: data });
-        image.src = "/api/users/profile-image?updated=" + Date.now();
+        image.src = apiUrl("/api/users/profile-image?updated=" + Date.now());
         document.getElementById("profileImageFile").value = "";
         showStatus("Profile photo uploaded.");
       } catch (error) {

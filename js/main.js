@@ -1,5 +1,11 @@
 /* Login and registration forms (login.html) - uses Bootstrap validation classes */
 (function () {
+  var apiBaseUrl = (window.APP_CONFIG && window.APP_CONFIG.apiBaseUrl || "").replace(/\/+$/, "");
+
+  function apiUrl(path) {
+    return apiBaseUrl + path;
+  }
+
   var loginPanel = document.getElementById("loginPanel");
   if (!loginPanel) return;
 
@@ -71,7 +77,7 @@
     }
     if (!ok) return;
 
-    submitForm(form, "/api/users/login", {
+    submitForm(form, apiUrl("/api/users/login"), {
       email: email.value.trim(),
       password: pass.value
     }, loginMessage, async function () {
@@ -114,7 +120,7 @@
     }
     if (!ok) return;
 
-    submitForm(registerForm, "/api/users", {
+    submitForm(registerForm, apiUrl("/api/users"), {
       name: name.value.trim(),
       email: registerEmail.value.trim(),
       password: registerPassword.value
