@@ -6,7 +6,7 @@
   <title>Login history – SMS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=6">
 </head>
 <body class="account-page" data-page="history">
   <header class="account-header">
@@ -21,6 +21,7 @@
     </nav>
   </header>
   <main class="account-main">
+    <p class="demo-notice" data-demo-notice hidden>Browser demo only: this history is stored in this browser and does not represent verified sign-ins.</p>
     <div class="page-heading">
       <div><p class="account-eyebrow">Account activity</p><h1 class="page-title">Login history</h1><p class="account-muted"><span data-history-count>0</span> recorded attempts</p></div>
       <a class="button-primary" href="/api/account/login-history.xlsx" data-api-path="/api/account/login-history.xlsx">↓ &nbsp;Export Excel</a>
@@ -35,7 +36,8 @@
     </section>
   </main>
   <p class="account-status" data-status role="status" aria-live="polite"></p>
-  <script src="js/config.js?v=1"></script>
-  <script src="js/account.js?v=3"></script>
+  <script src="js/config.js?v=2"></script>
+  <script src="js/demo-api.js?v=1"></script>
+  <script src="js/account.js?v=5"></script>
 </body>
 </html>

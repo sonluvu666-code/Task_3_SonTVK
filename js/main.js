@@ -1,6 +1,12 @@
 /* Login and registration forms (login.html) - uses Bootstrap validation classes */
 (function () {
   var apiBaseUrl = (window.APP_CONFIG && window.APP_CONFIG.apiBaseUrl || "").replace(/\/+$/, "");
+  var demoMode = Boolean(window.APP_CONFIG && window.APP_CONFIG.demoMode);
+  if (demoMode) {
+    document.querySelectorAll("[data-demo-notice]").forEach(function (notice) {
+      notice.hidden = false;
+    });
+  }
 
   function apiUrl(path) {
     return apiBaseUrl + path;
@@ -140,13 +146,17 @@
     try {
       var response;
       try {
-        response = await fetch(endpoint, {
+        var options = {
           method: "POST",
+          credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body)
-        });
+        };
+        response = demoMode
+          ? await window.DemoApi.request(endpoint.replace(apiBaseUrl, ""), options)
+          : await fetch(endpoint, options);
       } catch (error) {
-        messageElement.textContent = "Could not connect to the server. Make sure the application is running and try again.";
+        messageElement.textContent = error.message || "Could not complete the request. Please try again.";
         messageElement.classList.add("text-danger");
         return;
       }

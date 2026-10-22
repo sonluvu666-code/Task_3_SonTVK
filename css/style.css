@@ -175,6 +175,8 @@ body{font-family:"Inter",Arial,Helvetica,sans-serif;color:var(--navy);background
 .account-status.visible{display:block}
 .account-status.error{background:#a33730}
 .account-page button:disabled{opacity:.6;cursor:wait}
+.demo-notice{padding:.75rem 1rem;border:1px solid #f2c879;border-radius:9px;background:#fff8e8;color:#75531b;font-size:.84rem;line-height:1.5}
+.login-card>.demo-notice{margin:0 0 1.1rem}
 @media(max-width:760px){
   .account-header{align-items:flex-start;flex-direction:column;padding:.7rem 1rem;gap:.6rem}
   .account-header nav{width:100%;overflow-x:auto;padding-bottom:.2rem}

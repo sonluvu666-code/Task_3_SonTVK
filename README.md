@@ -82,6 +82,17 @@ Set `SESSION_COOKIE_SECURE=true` in the app service Variables after enabling
 the HTTPS domain. Keep database credentials in Railway Variables; never commit
 them to GitHub.
 
+## GitHub Pages browser demo
+
+`js/config.js` currently enables the browser-only demo so the Pages site can
+demonstrate its flows without a hosted API. Sign-in is simulated: any valid
+email and password passing the basic length check is accepted, and passwords
+are neither saved nor verified. Tasks, login activity, and profile photos are
+saved only in that browser's local storage. Demo exports are CSV files that
+Excel can open, not `.xlsx` workbooks. To connect the Pages site to a deployed
+API instead, set `apiBaseUrl` to the backend's HTTPS origin and set `demoMode`
+to `false`.
+
 ### Keep the frontend on GitHub Pages
 
 To serve only the frontend from GitHub Pages and host the API on Railway:

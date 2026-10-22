@@ -3,6 +3,12 @@
   var page = document.body.dataset.page;
   var currentUser;
   var apiBaseUrl = (window.APP_CONFIG && window.APP_CONFIG.apiBaseUrl || "").replace(/\/+$/, "");
+  var demoMode = Boolean(window.APP_CONFIG && window.APP_CONFIG.demoMode);
+  if (demoMode) {
+    document.querySelectorAll("[data-demo-notice]").forEach(function (notice) {
+      notice.hidden = false;
+    });
+  }
 
   function apiUrl(path) {
     return apiBaseUrl + path;
@@ -19,6 +25,24 @@
   }
 
   async function api(path, options) {
+    if (demoMode) {
+      var demoResponse;
+      try {
+        demoResponse = await window.DemoApi.request(path, options);
+      } catch (error) {
+        throw new Error(error.message || "Could not complete the request.");
+      }
+      if (demoResponse.status === 401) {
+        window.location.replace("login.html");
+        throw new Error("Your session has expired. Sign in again.");
+      }
+      if (!demoResponse.ok) {
+        var demoProblem = await demoResponse.json();
+        throw new Error(demoProblem.message || "The request could not be completed.");
+      }
+      if (demoResponse.status === 204) return null;
+      return demoResponse.json();
+    }
     var response;
     try {
       response = await fetch(apiUrl(path), Object.assign({ credentials: "include" }, options || {}));
@@ -188,7 +212,13 @@
       image.hidden = true;
       document.querySelector("[data-avatar-initial]").hidden = false;
     });
-    image.src = apiUrl("/api/users/profile-image?refresh=" + Date.now());
+    if (demoMode) {
+      var currentImage = JSON.parse(localStorage.getItem(
+        "smsDemoProfileImage:" + currentUser.email.toLowerCase()) || "null");
+      if (currentImage) image.src = currentImage;
+    } else {
+      image.src = apiUrl("/api/users/profile-image?refresh=" + Date.now());
+    }
 
     document.getElementById("profileImageFile").addEventListener("change", function (event) {
       var file = event.target.files[0];
@@ -215,9 +245,11 @@
       data.append("image", file);
       try {
         await api("/api/users/profile-image", { method: "POST", body: data });
-        image.src = apiUrl("/api/users/profile-image?updated=" + Date.now());
+        if (!demoMode) image.src = apiUrl("/api/users/profile-image?updated=" + Date.now());
         document.getElementById("profileImageFile").value = "";
-        showStatus("Profile photo uploaded.");
+        showStatus(demoMode
+          ? "Photo saved in this browser only."
+          : "Profile photo uploaded.");
       } catch (error) {
         showStatus(error.message, true);
       }
@@ -252,7 +284,9 @@
           newPassword: newPassword.value
         }));
         form.reset();
-        showStatus("Password updated successfully.");
+        showStatus(demoMode
+          ? "Demo only: password changes are not stored or used to authenticate."
+          : "Password updated successfully.");
       } catch (error) {
         showStatus(error.message, true);
       } finally {
@@ -285,6 +319,48 @@
     });
   }
 
+  function setupDemoExports() {
+    if (!demoMode) return;
+    document.querySelectorAll("[data-api-path]").forEach(function (link) {
+      link.textContent = link.textContent.replace("Export Excel", "Export Excel (CSV)");
+    });
+    document.querySelectorAll("[data-api-path]").forEach(function (link) {
+      link.href = "#";
+      link.addEventListener("click", async function (event) {
+        event.preventDefault();
+        try {
+          var data = await api(link.dataset.apiPath.replace(/\.xlsx$/, ""));
+          var historyExport = link.dataset.apiPath.indexOf("login-history") >= 0;
+          var rows = historyExport
+            ? [["User", "Email", "Login time", "Result"]].concat(data.map(function (entry) {
+                return [currentUser.name, currentUser.email, entry.loginTime,
+                  entry.successful ? "Success" : "Failed"];
+              }))
+            : [["Task", "Due date", "Status"]].concat(data.map(function (todo) {
+                return [todo.title, todo.dueDate || "", todo.completed ? "Completed" : "Pending"];
+              }));
+          var csv = "\uFEFF" + rows.map(function (row) {
+            return row.map(function (value) {
+              var cell = String(value);
+              if (/^[\t\r ]*[=+\-@]/.test(cell)) cell = "'" + cell;
+              return '"' + cell.replace(/"/g, '""') + '"';
+            }).join(",");
+          }).join("\r\n");
+          var file = new Blob([csv], { type: "text/csv;charset=utf-8" });
+          var fileUrl = URL.createObjectURL(file);
+          var download = document.createElement("a");
+          download.href = fileUrl;
+          download.download = historyExport ? "login-history.csv" : "todo-list.csv";
+          download.click();
+          setTimeout(function () { URL.revokeObjectURL(fileUrl); }, 1000);
+        } catch (error) {
+          showStatus(error.message, true);
+        }
+      });
+    });
+  }
+
+  setupDemoExports();
   loadAccount().then(function () {
     if (page === "profile") setupProfile();
     if (page === "history") return loadHistory();
