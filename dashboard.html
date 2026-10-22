@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard – SMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=5">
+</head>
+<body class="account-page" data-page="dashboard">
+  <header class="account-header">
+    <a class="account-logo" href="home.html"><span>S</span> SMS</a>
+    <nav aria-label="Main navigation">
+      <a href="home.html">Courses</a>
+      <a class="current" href="dashboard.html">Overview</a>
+      <a href="profile.html">Profile</a>
+      <a href="login-history.html">Login history</a>
+      <a href="todo.html">ToDo</a>
+      <button class="account-logout" type="button" data-logout>Log out</button>
+    </nav>
+  </header>
+  <main class="account-main">
+    <section class="dashboard-hero">
+      <div>
+        <p class="account-eyebrow">A place to make it yours</p>
+        <h1>Welcome,<br><span data-user-name>there</span>.</h1>
+        <p>A fresh space for your next chapter.</p>
+      </div>
+      <span class="hero-watermark" aria-hidden="true">SMS</span>
+    </section>
+    <section class="dashboard-intro">
+      <div>
+        <p class="account-eyebrow">Student management system</p>
+        <h2>Your time. Your goals. Your way.</h2>
+      </div>
+      <p>Choose what matters, shape your day, and keep a healthy balance. Use your personal space to manage account security, track sign-ins, and stay on top of your tasks.</p>
+      <div class="dashboard-steps">
+        <article><span>1</span><h3>Keep your profile close</h3><p>Add a photo and update your password whenever you need.</p></article>
+        <article><span>2</span><h3>Shape your day</h3><p>Keep your tasks and due dates together in one simple list.</p></article>
+        <article><span>3</span><h3>Know your activity</h3><p>Review sign-in attempts and export your records to Excel.</p></article>
+      </div>
+    </section>
+    <section class="dashboard-links" aria-label="Account shortcuts">
+      <article><p class="account-eyebrow">Your profile</p><h2>Keep your details close.</h2><p>Manage your account photo and password in one place.</p><a href="profile.html">Go to profile →</a></article>
+      <article><p class="account-eyebrow">Your activity</p><h2>A clear record.</h2><p>Review recent sign-in attempts and export your activity when you need it.</p><a href="login-history.html">View login history →</a></article>
+      <article><p class="account-eyebrow">Your priorities</p><h2>Make room for what matters.</h2><p>Add tasks, set optional due dates, and download your list as an Excel file.</p><a href="todo.html">Open your to-do list →</a></article>
+    </section>
+  </main>
+  <p class="account-status" data-status role="status" aria-live="polite"></p>
+  <script src="js/account.js?v=2"></script>
+</body>
+</html>

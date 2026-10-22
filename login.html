@@ -7,51 +7,90 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=5">
 </head>
 <body class="login-page d-flex flex-column align-items-center justify-content-center py-4 px-3">
   <div class="text-center mb-4">
-    <div class="logo">M</div>
-    <h1 class="h3 fw-bold">Welcome Back!</h1>
-    <p class="text-secondary mb-0">Sign in to continue to your account.</p>
+    <div class="logo">S</div>
+    <h1 class="h3 fw-bold" id="authTitle">Welcome Back!</h1>
+    <p class="text-secondary mb-0" id="authSubtitle">Sign in to continue to your account.</p>
   </div>
 
   <main class="card login-card bg-white">
-    <h2 class="h5 fw-bold">Login to your account</h2>
-    <p class="text-secondary small mb-4">Enter your email and password to get started.</p>
+    <div class="auth-tabs" role="tablist" aria-label="Account access">
+      <button class="auth-tab active" id="loginTab" type="button" role="tab" aria-selected="true" aria-controls="loginPanel">Login</button>
+      <button class="auth-tab" id="registerTab" type="button" role="tab" aria-selected="false" aria-controls="registerPanel" tabindex="-1">Register</button>
+    </div>
 
-    <form id="loginForm" novalidate>
-      <div class="mb-3">
-        <label class="form-label" for="email">Email Address</label>
-        <input type="email" class="form-control" id="email" placeholder="name@example.com" autocomplete="email">
-        <div class="invalid-feedback" id="emailError"></div>
-      </div>
+    <section id="loginPanel" role="tabpanel" aria-labelledby="loginTab">
+      <h2 class="h5 fw-bold" tabindex="-1">Login to your account</h2>
+      <p class="text-secondary small mb-4">Enter your email and password to get started.</p>
 
-      <div class="mb-3">
-        <div class="d-flex justify-content-between">
-          <label class="form-label" for="password">Password</label>
-          <a class="link-purple" href="#" id="forgot">Forget password?</a>
+      <form id="loginForm" novalidate>
+        <div class="mb-3">
+          <label class="form-label" for="email">Email Address</label>
+          <input type="email" class="form-control" id="email" placeholder="name@example.com" autocomplete="email" required>
+          <div class="invalid-feedback" id="emailError"></div>
         </div>
-        <div class="input-group has-validation">
-          <input type="password" class="form-control" id="password" placeholder="Enter your password" autocomplete="current-password">
-          <button type="button" class="btn toggle" id="toggle" aria-label="Show password">Show</button>
-          <div class="invalid-feedback" id="passError"></div>
+
+        <div class="mb-3">
+          <div class="d-flex justify-content-between">
+            <label class="form-label" for="password">Password</label>
+            <a class="link-purple" href="#" id="forgot">Forget password?</a>
+          </div>
+          <div class="input-group has-validation">
+            <input type="password" class="form-control" id="password" placeholder="Enter your password" autocomplete="current-password" required>
+            <button type="button" class="btn toggle" id="toggle" aria-label="Show password">Show</button>
+            <div class="invalid-feedback" id="passError"></div>
+          </div>
         </div>
-      </div>
 
-      <div class="form-check mb-4">
-        <input class="form-check-input" type="checkbox" id="remember">
-        <label class="form-check-label text-secondary" for="remember">Remember me</label>
-      </div>
-      <button type="submit" class="btn signin w-100">Sign In</button>
-    </form>
+        <div class="form-check mb-4">
+          <input class="form-check-input" type="checkbox" id="remember">
+          <label class="form-check-label text-secondary" for="remember">Remember me</label>
+        </div>
+        <button type="submit" class="btn signin w-100">Sign In</button>
+        <p id="loginMessage" class="auth-message small mt-3 mb-0" role="status" aria-live="polite"></p>
+      </form>
 
-    <p class="text-center text-secondary small mt-4 mb-0">Don't have an account? <a class="link-purple" href="#" id="create">Create an account</a></p>
+      <p class="text-center text-secondary small mt-4 mb-0">Don't have an account? <button class="auth-inline-link" id="showRegister" type="button">Register</button></p>
+    </section>
+
+    <section id="registerPanel" role="tabpanel" aria-labelledby="registerTab" hidden>
+      <h2 class="h5 fw-bold" tabindex="-1">Create your account</h2>
+      <p class="text-secondary small mb-4">A few details and you're ready to go.</p>
+
+      <form id="registerForm" novalidate>
+        <div class="mb-3">
+          <label class="form-label" for="registerName">Name</label>
+          <input type="text" class="form-control" id="registerName" placeholder="Your name" autocomplete="name" maxlength="100" required>
+          <div class="invalid-feedback" id="nameError"></div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="registerEmail">Email Address</label>
+          <input type="email" class="form-control" id="registerEmail" placeholder="name@example.com" autocomplete="email" maxlength="320" required>
+          <div class="invalid-feedback" id="registerEmailError"></div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="registerPassword">Password</label>
+          <input type="password" class="form-control" id="registerPassword" placeholder="At least 6 characters" autocomplete="new-password" minlength="6" maxlength="72" required aria-describedby="registerPasswordHint">
+          <div class="form-text" id="registerPasswordHint">Must be at least 6 characters.</div>
+          <div class="invalid-feedback" id="registerPasswordError"></div>
+        </div>
+
+        <button type="submit" class="btn signin w-100">Create account</button>
+        <p id="registerMessage" class="auth-message small mt-3 mb-0" role="status" aria-live="polite"></p>
+      </form>
+
+      <p class="text-center text-secondary small mt-4 mb-0">Already have an account? <button class="auth-inline-link" id="showLogin" type="button">Log in</button></p>
+    </section>
   </main>
 
   <p class="text-secondary small mt-4 mb-0">© 2026 My Website. All rights reserved.</p>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=2"></script>
 </body>
 </html>

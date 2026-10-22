@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login history – SMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=5">
+</head>
+<body class="account-page" data-page="history">
+  <header class="account-header">
+    <a class="account-logo" href="home.html"><span>S</span> SMS</a>
+    <nav aria-label="Main navigation">
+      <a href="home.html">Courses</a>
+      <a href="dashboard.html">Overview</a>
+      <a href="profile.html">Profile</a>
+      <a class="current" href="login-history.html">Login history</a>
+      <a href="todo.html">ToDo</a>
+      <button class="account-logout" type="button" data-logout>Log out</button>
+    </nav>
+  </header>
+  <main class="account-main">
+    <div class="page-heading">
+      <div><p class="account-eyebrow">Account activity</p><h1 class="page-title">Login history</h1><p class="account-muted"><span data-history-count>0</span> recorded attempts</p></div>
+      <a class="button-primary" href="/api/account/login-history.xlsx">↓ &nbsp;Export Excel</a>
+    </div>
+    <section class="account-card table-card">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>User</th><th>Email</th><th>Login time</th><th>Result</th></tr></thead>
+          <tbody id="historyRows"><tr><td colspan="4" class="empty-state">Loading your activity…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <p class="account-status" data-status role="status" aria-live="polite"></p>
+  <script src="js/account.js?v=2"></script>
+</body>
+</html>
